@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Acción Flash - PC Builder Simulator</title>
+    <title>AcciÃ³n Flash - PC Builder Simulator</title>
     <style>
         * {
             margin: 0;
@@ -19,7 +19,6 @@
             overflow-x: hidden;
         }
 
-  
         body::before {
             content: '';
             position: fixed;
@@ -40,7 +39,6 @@
             100% { transform: translate(50px, 50px); }
         }
 
-     
         .header {
             background: rgba(0,255,204,0.1);
             backdrop-filter: blur(20px);
@@ -67,14 +65,12 @@
             font-size: 1.2rem;
         }
 
-     
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 20px;
         }
 
-     
         .pc-builder {
             display: grid;
             grid-template-columns: 1fr 400px;
@@ -82,7 +78,6 @@
             margin-bottom: 40px;
         }
 
-        /* Área de construcción */
         .build-area {
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
@@ -127,7 +122,6 @@
             font-weight: bold;
         }
 
-        /* Posiciones de componentes */
         .cpu-slot { top: 20px; left: 20px; width: 120px; height: 80px; }
         .gpu-slot { top: 150px; left: 20px; width: 200px; height: 100px; }
         .ram-slot { top: 20px; right: 20px; width: 100px; height: 120px; }
@@ -135,7 +129,6 @@
         .psu-slot { bottom: 20px; right: 20px; width: 120px; height: 80px; }
         .mobo-slot { top: 120px; left: 150px; width: 180px; height: 200px; }
 
-        /* Panel lateral */
         .control-panel {
             background: rgba(255,255,255,0.05);
             border-radius: 20px;
@@ -186,7 +179,6 @@
             font-size: 0.9rem;
         }
 
-        /* Presupuesto */
         .budget-display {
             background: linear-gradient(135deg, #00FFCC, #00B388);
             padding: 20px;
@@ -208,7 +200,6 @@
             font-weight: 700;
         }
 
-        /* Botones de acción */
         .action-buttons {
             display: flex;
             gap: 15px;
@@ -244,7 +235,6 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
-        /* Efectos especiales */
         .particle {
             position: absolute;
             width: 4px;
@@ -260,7 +250,6 @@
             50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
         }
 
-        /* Compatibilidad y recomendaciones */
         .recommendations {
             background: rgba(255,255,255,0.05);
             border-radius: 15px;
@@ -281,7 +270,6 @@
             line-height: 1.5;
         }
 
-        /* Botón de regreso */
         .back-button {
             position: fixed;
             top: 20px;
@@ -307,7 +295,6 @@
             box-shadow: 0 8px 25px rgba(0,255,204,0.5);
         }
 
-        /* Responsive */
         @media screen and (max-width: 1024px) {
             .pc-builder {
                 grid-template-columns: 1fr;
@@ -343,44 +330,32 @@
     </style>
 </head>
 <body>
-    <a href="PRINCIPAL.html" class="back-button">
-        ?? Volver al Inicio
+    <a href="index.html" class="back-button">
+        &#11013;&#65039; Volver al Inicio
     </a>
 
     <div class="header">
-        <h1>?? PC BUILDER SIMULATOR</h1>
+        <h1>&#9889; PC BUILDER SIMULATOR</h1>
         <p class="subtitle">Construye tu PC perfecta virtualmente</p>
     </div>
 
     <div class="container">
         <div class="pc-builder">
-            <!-- Área de construcción -->
+            <!-- Ãrea de construcciÃ³n -->
             <div class="build-area">
                 <div class="pc-case" id="pcCase">
-                    <div class="component-slot cpu-slot" data-type="cpu">
-                        CPU
-                    </div>
-                    <div class="component-slot gpu-slot" data-type="gpu">
-                        GPU / Tarjeta Gráfica
-                    </div>
-                    <div class="component-slot ram-slot" data-type="ram">
-                        RAM
-                    </div>
-                    <div class="component-slot storage-slot" data-type="storage">
-                        Almacenamiento
-                    </div>
-                    <div class="component-slot psu-slot" data-type="psu">
-                        Fuente de Poder
-                    </div>
-                    <div class="component-slot mobo-slot" data-type="mobo">
-                        Motherboard
-                    </div>
+                    <div class="component-slot cpu-slot" data-type="cpu">CPU</div>
+                    <div class="component-slot gpu-slot" data-type="gpu">GPU / Tarjeta GrÃ¡fica</div>
+                    <div class="component-slot ram-slot" data-type="ram">RAM</div>
+                    <div class="component-slot storage-slot" data-type="storage">Almacenamiento</div>
+                    <div class="component-slot psu-slot" data-type="psu">Fuente de Poder</div>
+                    <div class="component-slot mobo-slot" data-type="mobo">Motherboard</div>
                 </div>
                 
                 <div class="recommendations">
-                    <div class="rec-title">?? Recomendaciones:</div>
+                    <div class="rec-title">&#128161; Recomendaciones:</div>
                     <div class="rec-text" id="recommendations">
-                        Arrastra los componentes desde el panel lateral para armar tu PC. Te ayudaré con recomendaciones de compatibilidad.
+                        Arrastra los componentes desde el panel lateral para armar tu PC. Te ayudarÃ© con recomendaciones de compatibilidad.
                     </div>
                 </div>
             </div>
@@ -388,13 +363,13 @@
             <!-- Panel de control -->
             <div class="control-panel">
                 <div class="budget-display">
-                    <div class="budget-title">?? Presupuesto Total</div>
+                    <div class="budget-title">&#128178; Presupuesto Total</div>
                     <div class="budget-amount" id="totalBudget">$0</div>
                 </div>
 
                 <!-- Procesadores -->
                 <div class="component-category">
-                    <div class="category-title">?? Procesadores</div>
+                    <div class="category-title">&#128187; Procesadores</div>
                     <div class="component-item" draggable="true" data-type="cpu" data-price="299" data-name="Intel Core i5-12400F">
                         <div class="component-name">Intel Core i5-12400F</div>
                         <div class="component-price">$299</div>
@@ -409,9 +384,9 @@
                     </div>
                 </div>
 
-                <!-- Tarjetas Gráficas -->
+                <!-- Tarjetas GrÃ¡ficas -->
                 <div class="component-category">
-                    <div class="category-title">?? Tarjetas Gráficas</div>
+                    <div class="category-title">&#128421; Tarjetas GrÃ¡ficas</div>
                     <div class="component-item" draggable="true" data-type="gpu" data-price="399" data-name="RTX 4060">
                         <div class="component-name">NVIDIA RTX 4060</div>
                         <div class="component-price">$399</div>
@@ -428,7 +403,7 @@
 
                 <!-- RAM -->
                 <div class="component-category">
-                    <div class="category-title">? Memoria RAM</div>
+                    <div class="category-title">&#128190; Memoria RAM</div>
                     <div class="component-item" draggable="true" data-type="ram" data-price="79" data-name="16GB DDR4-3200">
                         <div class="component-name">16GB DDR4-3200</div>
                         <div class="component-price">$79</div>
@@ -445,7 +420,7 @@
 
                 <!-- Almacenamiento -->
                 <div class="component-category">
-                    <div class="category-title">?? Almacenamiento</div>
+                    <div class="category-title">&#128448; Almacenamiento</div>
                     <div class="component-item" draggable="true" data-type="storage" data-price="89" data-name="1TB NVMe SSD">
                         <div class="component-name">1TB NVMe SSD</div>
                         <div class="component-price">$89</div>
@@ -458,7 +433,7 @@
 
                 <!-- Motherboard -->
                 <div class="component-category">
-                    <div class="category-title">?? Motherboard</div>
+                    <div class="category-title">&#128736; Motherboard</div>
                     <div class="component-item" draggable="true" data-type="mobo" data-price="129" data-name="B450 Motherboard">
                         <div class="component-name">B450 Motherboard</div>
                         <div class="component-price">$129</div>
@@ -471,7 +446,7 @@
 
                 <!-- Fuente de Poder -->
                 <div class="component-category">
-                    <div class="category-title">? Fuente de Poder</div>
+                    <div class="category-title">&#9889; Fuente de Poder</div>
                     <div class="component-item" draggable="true" data-type="psu" data-price="89" data-name="650W 80+ Gold">
                         <div class="component-name">650W 80+ Gold</div>
                         <div class="component-price">$89</div>
@@ -483,242 +458,6 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button class="action-btn build-btn" onclick="generateBuildReport()">
-                        ?? Generar Reporte
-                    </button>
-                    <button class="action-btn reset-btn" onclick="resetBuild()">
-                        ?? Reiniciar Build
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+                    <button class="
 
-    <script>
-        let currentBuild = {};
-        let totalCost = 0;
 
-        // Sistema de drag and drop
-        document.addEventListener('DOMContentLoaded', function() {
-            const componentItems = document.querySelectorAll('.component-item');
-            const componentSlots = document.querySelectorAll('.component-slot');
-
-            // Drag start
-            componentItems.forEach(item => {
-                item.addEventListener('dragstart', function(e) {
-                    e.dataTransfer.setData('text/plain', JSON.stringify({
-                        type: this.dataset.type,
-                        name: this.dataset.name,
-                        price: parseInt(this.dataset.price)
-                    }));
-                    this.style.opacity = '0.5';
-                });
-
-                item.addEventListener('dragend', function() {
-                    this.style.opacity = '1';
-                });
-            });
-
-            // Drop zones
-            componentSlots.forEach(slot => {
-                slot.addEventListener('dragover', function(e) {
-                    e.preventDefault();
-                    if (!this.classList.contains('filled')) {
-                        this.style.background = 'rgba(0,255,204,0.3)';
-                    }
-                });
-
-                slot.addEventListener('dragleave', function() {
-                    this.style.background = 'rgba(0,255,204,0.05)';
-                });
-
-                slot.addEventListener('drop', function(e) {
-                    e.preventDefault();
-                    const componentData = JSON.parse(e.dataTransfer.getData('text/plain'));
-                    
-                    if (componentData.type === this.dataset.type && !this.classList.contains('filled')) {
-                        // Instalar componente
-                        this.textContent = componentData.name;
-                        this.classList.add('filled');
-                        this.style.background = 'rgba(0,255,204,0.2)';
-                        
-                        // Actualizar build
-                        currentBuild[componentData.type] = componentData;
-                        updateBudget();
-                        updateRecommendations();
-                        
-                        // Efecto de partículas
-                        createParticles(this);
-                    }
-                });
-
-                // Click para remover componente
-                slot.addEventListener('dblclick', function() {
-                    if (this.classList.contains('filled')) {
-                        const componentType = this.dataset.type;
-                        delete currentBuild[componentType];
-                        this.classList.remove('filled');
-                        this.textContent = this.textContent.split('\n')[0]; // Restaurar texto original
-                        this.style.background = 'rgba(0,255,204,0.05)';
-                        updateBudget();
-                        updateRecommendations();
-                    }
-                });
-            });
-        });
-
-        // Actualizar presupuesto
-        function updateBudget() {
-            totalCost = Object.values(currentBuild).reduce((sum, component) => sum + component.price, 0);
-            document.getElementById('totalBudget').textContent = `$${totalCost.toLocaleString()}`;
-        }
-
-        // Sistema de recomendaciones
-        function updateRecommendations() {
-            const recElement = document.getElementById('recommendations');
-            const componentsCount = Object.keys(currentBuild).length;
-            
-            if (componentsCount === 0) {
-                recElement.textContent = "Arrastra los componentes desde el panel lateral para armar tu PC. Te ayudaré con recomendaciones de compatibilidad.";
-                return;
-            }
-
-            let recommendations = [];
-
-            // Verificar compatibilidad CPU-GPU
-            if (currentBuild.cpu && currentBuild.gpu) {
-                if (currentBuild.cpu.name.includes('i5') && currentBuild.gpu.price > 1000) {
-                    recommendations.push("?? Tu CPU podría ser un cuello de botella para esa GPU tan potente.");
-                } else if (currentBuild.cpu.name.includes('i9') && currentBuild.gpu.price < 400) {
-                    recommendations.push("?? Podrías aprovechar mejor tu CPU con una GPU más potente.");
-                }
-            }
-
-            // Verificar RAM
-            if (currentBuild.ram) {
-                if (currentBuild.gpu && currentBuild.gpu.name.includes('4090') && !currentBuild.ram.name.includes('32GB')) {
-                    recommendations.push("?? Para RTX 4090, considera 32GB de RAM para mejor rendimiento.");
-                }
-            }
-
-            // Verificar fuente de poder
-            if (currentBuild.psu && currentBuild.gpu) {
-                if (currentBuild.gpu.name.includes('4090') && !currentBuild.psu.name.includes('850W')) {
-                    recommendations.push("? RTX 4090 requiere al menos 850W de fuente de poder.");
-                }
-            }
-
-            if (recommendations.length === 0) {
-                if (componentsCount === 6) {
-                    recommendations.push("?? ¡Excelente! Tu build está completo y balanceado.");
-                } else {
-                    recommendations.push(`? Buen progreso. Te faltan ${6 - componentsCount} componentes para completar tu PC.`);
-                }
-            }
-
-            recElement.innerHTML = recommendations.join('<br>');
-        }
-
-        // Crear efecto de partículas
-        function createParticles(element) {
-            const rect = element.getBoundingClientRect();
-            const container = document.getElementById('pcCase');
-            
-            for (let i = 0; i < 10; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = (rect.left - container.offsetLeft + Math.random() * rect.width) + 'px';
-                particle.style.top = (rect.top - container.offsetTop + Math.random() * rect.height) + 'px';
-                particle.style.animationDelay = Math.random() * 1 + 's';
-                
-                container.appendChild(particle);
-                
-                setTimeout(() => particle.remove(), 3000);
-            }
-        }
-
-        // Generar reporte de build
-        function generateBuildReport() {
-            if (Object.keys(currentBuild).length === 0) {
-                alert('?? Primero agrega algunos componentes a tu build');
-                return;
-            }
-
-            let report = "??? REPORTE DE TU PC BUILD\n";
-            report += "=" * 30 + "\n\n";
-            
-            Object.entries(currentBuild).forEach(([type, component]) => {
-                const typeNames = {
-                    cpu: '?? Procesador',
-                    gpu: '?? Tarjeta Gráfica',
-                    ram: '? Memoria RAM',
-                    storage: '?? Almacenamiento',
-                    mobo: '?? Motherboard',
-                    psu: '? Fuente de Poder'
-                };
-                report += `${typeNames[type]}: ${component.name} - $${component.price}\n`;
-            });
-            
-            report += `\n?? TOTAL: $${totalCost.toLocaleString()}\n`;
-            report += `\n?? Completado: ${Object.keys(currentBuild).length}/6 componentes`;
-            
-            // Calcular rendimiento estimado
-            let performance = "Básico";
-            if (totalCost > 2000) performance = "Enthusiast";
-            else if (totalCost > 1200) performance = "Alto";
-            else if (totalCost > 800) performance = "Medio";
-            
-            report += `\n?? Rendimiento Estimado: ${performance}`;
-
-            alert(report);
-        }
-
-        // Reiniciar build
-        function resetBuild() {
-            if (confirm('¿Estás seguro de que quieres reiniciar tu build?')) {
-                currentBuild = {};
-                totalCost = 0;
-                
-                document.querySelectorAll('.component-slot').forEach(slot => {
-                    slot.classList.remove('filled');
-                    slot.style.background = 'rgba(0,255,204,0.05)';
-                    // Restaurar texto original de cada slot
-                    const originalTexts = {
-                        cpu: 'CPU',
-                        gpu: 'GPU / Tarjeta Gráfica',
-                        ram: 'RAM',
-                        storage: 'Almacenamiento',
-                        psu: 'Fuente de Poder',
-                        mobo: 'Motherboard'
-                    };
-                    slot.textContent = originalTexts[slot.dataset.type];
-                });
-                
-                updateBudget();
-                updateRecommendations();
-                
-                // Efecto visual de reset
-                document.getElementById('pcCase').style.animation = 'none';
-                setTimeout(() => {
-                    document.getElementById('pcCase').style.animation = '';
-                }, 100);
-            }
-        }
-
-        // Efectos visuales adicionales
-        setInterval(() => {
-            const particles = document.querySelectorAll('.particle');
-            if (particles.length < 5 && Math.random() > 0.8) {
-                const container = document.getElementById('pcCase');
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * container.offsetWidth + 'px';
-                particle.style.top = Math.random() * container.offsetHeight + 'px';
-                container.appendChild(particle);
-                
-                setTimeout(() => particle.remove(), 3000);
-            }
-        }, 2000);
-    </script>
-</body>
-</html>
