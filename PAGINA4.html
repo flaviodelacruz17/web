@@ -348,7 +348,7 @@
     </a>
 
     <div class="header">
-        <h1>?? PC BUILDER SIMULATOR</h1>
+        <h1>PC BUILDER SIMULATOR</h1>
         <p class="subtitle">Construye tu PC perfecta virtualmente</p>
     </div>
 
@@ -484,10 +484,10 @@
 
                 <div class="action-buttons">
                     <button class="action-btn build-btn" onclick="generateBuildReport()">
-                        ?? Generar Reporte
+                        Generar Reporte
                     </button>
                     <button class="action-btn reset-btn" onclick="resetBuild()">
-                        ?? Reiniciar Build
+                        Reiniciar Build
                     </button>
                 </div>
             </div>
@@ -649,18 +649,18 @@
             
             Object.entries(currentBuild).forEach(([type, component]) => {
                 const typeNames = {
-                    cpu: '?? Procesador',
-                    gpu: '?? Tarjeta Grafica',
-                    ram: '? Memoria RAM',
-                    storage: '?? Almacenamiento',
-                    mobo: '?? Motherboard',
-                    psu: '? Fuente de Poder'
+                    cpu: ' Procesador',
+                    gpu: ' Tarjeta Grafica',
+                    ram: ' Memoria RAM',
+                    storage: 'Almacenamiento',
+                    mobo: ' Motherboard',
+                    psu: 'Fuente de Poder'
                 };
                 report += `${typeNames[type]}: ${component.name} - $${component.price}\n`;
             });
             
-            report += `\n?? TOTAL: $${totalCost.toLocaleString()}\n`;
-            report += `\n?? Completado: ${Object.keys(currentBuild).length}/6 componentes`;
+            report += `\n TOTAL: $${totalCost.toLocaleString()}\n`;
+            report += `\nCompletado: ${Object.keys(currentBuild).length}/6 componentes`;
             
             // Calcular rendimiento estimado
             let performance = "Basico";
@@ -668,7 +668,7 @@
             else if (totalCost > 1200) performance = "Alto";
             else if (totalCost > 800) performance = "Medio";
             
-            report += `\n?? Rendimiento Estimado: ${performance}`;
+            report += `\n Rendimiento Estimado: ${performance}`;
 
             alert(report);
         }
@@ -722,6 +722,7 @@
     </script>
 </body>
 </html>
+
 
 
 
