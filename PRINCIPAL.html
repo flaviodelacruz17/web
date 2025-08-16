@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computación e Informática - IESTP Luis Negreiros Vega</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #00FFCC 0%, #00D4AA 50%, #00B388 100%);
+            min-height: 100vh;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Patrón de fondo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 2px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.08) 3px, transparent 3px),
+                radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 100px 100px, 150px 150px, 75px 75px;
+            animation: backgroundMove 30s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes backgroundMove {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Header moderno */
+        header {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .logo-container img {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            border: 4px solid rgba(255,255,255,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .logo-container:hover img {
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #ffffff;
+            font-size: 3rem;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin: 20px 0;
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: titleGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes titleGlow {
+            from { text-shadow: 2px 2px 10px rgba(0,0,0,0.3); }
+            to { text-shadow: 2px 2px 20px rgba(0,0,0,0.5); }
+        }
+
+        /* Navegación con enlaces flotantes */
+        .navigation-links {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-link {
+            background: rgba(255,255,255,0.9);
+            padding: 12px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: #00B388;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: rgba(0,179,136,0.1);
+            border-color: #00B388;
+            transform: translateX(-10px);
+            box-shadow: 0 8px 25px rgba(0,179,136,0.3);
+        }
+
+        /* Contenedor principal */
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Sección de categorías navegables */
+        .categories-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            backdrop-filter: blur(20px);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #00B388;
+            margin-bottom: 40px;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #00FFCC, #00B388);
+            border-radius: 2px;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .category-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0,255,204,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .category-card:hover::before {
+            left: 100%;
+        }
+
+        .category-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: #00B388;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .category-image {
+            width: 100%;
+            max-width: 280px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+
+        .category-card:hover .category-image {
+            transform: scale(1.05);
+        }
+
+        .category-description {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        /* Sección de información */
+        .info-section {
+            background: rgba(255,255,255,0.9);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .welcome-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #444;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .highlight {
+            color: #00B388;
+            font-weight: 700;
+        }
+
+        /* Sección de contactos */
+        .contact-section {
+            background: rgba(255,255,255,0.9);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .contact-card {
+            background: linear-gradient(135deg, #00FFCC, #00D4AA);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,255,204,0.3);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,255,204,0.4);
+        }
+
+        .contact-card a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background 0.3s ease;
+        }
+
+        .contact-card a:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Nueva sección de ubicación */
+        .location-section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            backdrop-filter: blur(20px);
+        }
+
+        .location-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .location-info {
+            background: linear-gradient(135deg, #00B388, #00FFCC);
+            padding: 30px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,179,136,0.3);
+        }
+
+        .location-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .address-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .location-button {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 15px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .location-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.6);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .map-container {
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 400px;
+            border: none;
+            filter: grayscale(20%) brightness(1.1);
+            transition: filter 0.3s ease;
+        }
+
+        .map-container:hover iframe {
+            filter: grayscale(0%) brightness(1.2);
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,179,136,0.9);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+        /* Botón Flash incorporado */
+        .flash-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 30px rgba(255,107,107,0.3);
+            transition: all 0.3s ease;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .flash-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,107,107,0.5);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Footer mejorado */
+        footer {
+            background: rgba(0,0,0,0.8);
+            color: #fff;
+            text-align: center;
+            padding: 40px 20px;
+            backdrop-filter: blur(20px);
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-date {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            color: #00FFCC;
+        }
+
+        .footer-team {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 1024px) {
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .navigation-links {
+                position: static;
+                flex-direction: row;
+                justify-content: center;
+                margin-top: 20px;
+                transform: none;
+            }
+
+            .location-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+                letter-spacing: 1px;
+            }
+            
+            .navigation-links {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .nav-link {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+
+            .map-container iframe {
+                height: 300px;
+            }
+
+            .location-info {
+                padding: 20px;
+            }
+
+            .location-title {
+                font-size: 1.5rem;
+            }
+
+            .address-text {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .categories-section, 
+            .info-section, 
+            .contact-section,
+            .location-section {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .map-container iframe {
+                height: 250px;
+            }
+
+            .map-overlay {
+                position: static;
+                margin-bottom: 15px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="PAGINA2.html">
+                <img src="imagenes/mi_gift.gif" alt="Logo IESTP Luis Negreiros Vega">
+            </a>
+        </div>
+        
+        <h1>EL FUTURO ES LA COMPUTACIÓN</h1>
+        
+        <div class="navigation-links">
+            <a href="https://www.sise.edu.pe/blog/todo-lo-que-necesitas-saber-sobre-la-computacion-e-informatica" target="_blank" class="nav-link">📚 Más Info</a>
+            <a href="PAGINA2.html" class="nav-link">🏠 Inicio</a>
+            <a href="PAGINA3.html" class="nav-link">💻 Explorar</a>
+            <a href="PAGINA4.html" class="flash-button">🚀 Acción Flash</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- Sección de Categorías Navegables -->
+        <section class="categories-section">
+            <h2 class="section-title">🚀 Navegación Principal</h2>
+            
+            <div class="categories-grid">
+                <div class="category-card" onclick="window.location.href='PAGINA2.html'">
+                    <h3 class="category-title">🏠 Inicio</h3>
+                    <img src="https://img.freepik.com/vector-premium/registro-linea-concepto-registro-computadora-portatil-pagina-formulario-inicio-sesion-contrasena-pantalla_735449-671.jpg" alt="Inicio" class="category-image">
+                    <p class="category-description">Página principal con información general y presentación del instituto</p>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='PAGINA3.html'">
+                    <h3 class="category-title">💻 Explorar</h3>
+                    <img src="https://www.lacuracao.pe/media/catalog/product/s/y/symp183_1.jpg?quality=80&bg-color=255,255,255&fit=bounds&height=400&width=400&canvas=400:400" alt="Explorar" class="category-image">
+                    <p class="category-description">Descubre más contenido, recursos y herramientas de computación e informática</p>
+                </div>
+                
+                <div class="category-card" onclick="window.location.href='PAGINA4.html'">
+                    <h3 class="category-title">🚀 Acción Flash</h3>
+                    <img src="https://cdn.shopify.com/s/files/1/0527/1620/8326/files/como-armar-una-pc-gamer-gama-alta_480x480.webp?v=1658779084" alt="Acción Flash" class="category-image">
+                    <p class="category-description">Contenido dinámico y acciones rápidas para una experiencia interactiva</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de Información -->
+        <section class="info-section">
+            <div class="welcome-text">
+                <p>¡Bienvenido a nuestra página de <span class="highlight">Computación e Informática</span>!</p>
+                <p>Aquí exploramos el mundo de la <span class="highlight">tecnología</span>, el <span class="highlight">desarrollo de software</span> y el <span class="highlight">manejo de datos</span>.</p>
+                <p>Esta página representa nuestro compromiso con el <span class="highlight">aprendizaje</span> y la <span class="highlight">innovación</span> en el área de la informática.</p>
+            </div>
+        </section>
+
+        <!-- Sección de Contactos -->
+        <section class="contact-section">
+            <h2 class="section-title">📧 Contacta con Nuestro Equipo</h2>
+            
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <a href="mailto:70066504@iestpluisnegreiros.edu.pe">
+                        📨 Flavio De La Cruz<br>
+                        <small>Líder de Proyecto</small>
+                    </a>
+                </div>
+                
+                <div class="contact-card">
+                    <a href="mailto:71644384@iestpluisnegreiros.edu.pe">
+                        📨 Carmen Salazar<br>
+                        <small>Desarrolladora Frontend</small>
+                    </a>
+                </div>
+                
+                <div class="contact-card">
+                    <a href="mailto:21541360@iestpluisnegreiros.edu.pe">
+                        📨 Arelly Ormeño<br>
+                        <small>Diseñadora UX/UI</small>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nueva Sección de Ubicación con Mapa -->
+        <section class="location-section">
+            <h2 class="section-title">📍 Nuestra Ubicación</h2>
+            
+            <div class="location-container">
+                <div class="location-info">
+                    <div class="location-title">🏫 Dirección principal</div>
+                    <div class="address-text">
+                        📍 Jr. Tacna 3269<br>
+                        San Martín de Porres 15106<br>
+                        Lima, Perú
+                    </div>
+                    <a href="https://maps.app.goo.gl/Y1B587hsK1YmrkPn6" target="_blank" class="location-button">
+                        🗺️ Ver Direcciones
+                    </a>
+                </div>
+                
+                <div class="map-container">
+                    <div class="map-overlay">
+                        📌 Dirección de la tienda 
+                    </div>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.0234567890123!2d-77.0869!3d-12.0123!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTLCsDAwJzQ0LjMiUyA3N8KwMDUnMTIuOCJX!5e0!3m2!1ses!2spe!4v1234567890123!5m2!1ses!2spe&q=Jr.+Tacna+3269,+San+Martín+de+Porres+15106,+Lima,+Peru"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-date">🗓️ Creada el 25 de mayo de 2025</p>
+            <p class="footer-team">
+                <strong>👥 Integrantes del Equipo:</strong><br>
+                Flavio De La Cruz • Carmen Salazar • Arelly Ormeño<br>
+                <em>IESTP Luis Negreiros Vega - Computación e Informática</em>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Efecto de parallax suave
+        document.addEventListener('mousemove', (e) => {
+            const mouseX = e.clientX / window.innerWidth;
+            const mouseY = e.clientY / window.innerHeight;
+            
+            const categories = document.querySelectorAll('.category-card');
+            categories.forEach((card, index) => {
+                const speed = (index + 1) * 0.5;
+                card.style.transform = `translateX(${mouseX * speed}px) translateY(${mouseY * speed}px)`;
+            });
+        });
+
+        // Animación de aparición al hacer scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Aplicar animaciones a las secciones
+        document.querySelectorAll('section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(50px)';
+            section.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+            observer.observe(section);
+        });
+
+        // Efecto de hover mejorado para las tarjetas
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-15px) scale(1.02) rotateY(5deg)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1) rotateY(0)';
+            });
+        });
+
+        // Efecto hover para el mapa
+        const mapContainer = document.querySelector('.map-container');
+        const mapOverlay = document.querySelector('.map-overlay');
+
+        mapContainer.addEventListener('mouseenter', () => {
+            mapOverlay.style.opacity = '0.8';
+            mapOverlay.style.transform = 'scale(1.05)';
+        });
+
+        mapContainer.addEventListener('mouseleave', () => {
+            mapOverlay.style.opacity = '1';
+            mapOverlay.style.transform = 'scale(1)';
+        });
+    </script>
+</body>
+</html>

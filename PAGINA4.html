@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Acción Flash - PC Builder Simulator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+  
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(90deg, rgba(0,255,204,0.1) 1px, transparent 1px),
+                linear-gradient(rgba(0,255,204,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: circuitMove 20s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes circuitMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+     
+        .header {
+            background: rgba(0,255,204,0.1);
+            backdrop-filter: blur(20px);
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid rgba(0,255,204,0.3);
+        }
+
+        .header h1 {
+            color: #00FFCC;
+            font-size: 2.5rem;
+            text-shadow: 0 0 20px rgba(0,255,204,0.5);
+            margin-bottom: 10px;
+            animation: neonGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonGlow {
+            from { text-shadow: 0 0 20px rgba(0,255,204,0.5); }
+            to { text-shadow: 0 0 30px rgba(0,255,204,0.8), 0 0 40px rgba(0,255,204,0.6); }
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 1.2rem;
+        }
+
+     
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+     
+        .pc-builder {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Área de construcción */
+        .build-area {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 30px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0,255,204,0.2);
+        }
+
+        .pc-case {
+            width: 100%;
+            height: 500px;
+            background: linear-gradient(145deg, #2a2a3e, #1f1f33);
+            border-radius: 15px;
+            position: relative;
+            border: 3px solid rgba(0,255,204,0.3);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .component-slot {
+            position: absolute;
+            border: 2px dashed rgba(0,255,204,0.4);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: #aaa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(0,255,204,0.05);
+        }
+
+        .component-slot:hover {
+            border-color: rgba(0,255,204,0.8);
+            background: rgba(0,255,204,0.1);
+        }
+
+        .component-slot.filled {
+            border: 2px solid #00FFCC;
+            background: rgba(0,255,204,0.2);
+            color: #00FFCC;
+            font-weight: bold;
+        }
+
+        /* Posiciones de componentes */
+        .cpu-slot { top: 20px; left: 20px; width: 120px; height: 80px; }
+        .gpu-slot { top: 150px; left: 20px; width: 200px; height: 100px; }
+        .ram-slot { top: 20px; right: 20px; width: 100px; height: 120px; }
+        .storage-slot { bottom: 80px; left: 20px; width: 150px; height: 60px; }
+        .psu-slot { bottom: 20px; right: 20px; width: 120px; height: 80px; }
+        .mobo-slot { top: 120px; left: 150px; width: 180px; height: 200px; }
+
+        /* Panel lateral */
+        .control-panel {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(0,255,204,0.2);
+            height: fit-content;
+        }
+
+        .component-category {
+            margin-bottom: 25px;
+        }
+
+        .category-title {
+            color: #00FFCC;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .component-item {
+            background: rgba(0,255,204,0.1);
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 10px;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,255,204,0.2);
+            user-select: none;
+        }
+
+        .component-item:hover {
+            background: rgba(0,255,204,0.2);
+            transform: translateX(5px);
+        }
+
+        .component-item:active {
+            cursor: grabbing;
+        }
+
+        .component-name {
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .component-price {
+            color: #00FFCC;
+            font-size: 0.9rem;
+        }
+
+        /* Presupuesto */
+        .budget-display {
+            background: linear-gradient(135deg, #00FFCC, #00B388);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,255,204,0.3);
+        }
+
+        .budget-title {
+            color: #fff;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .budget-amount {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Botones de acción */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .build-btn {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            flex: 1;
+        }
+
+        .reset-btn {
+            background: linear-gradient(45deg, #757575, #424242);
+            color: white;
+            flex: 1;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Efectos especiales */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00FFCC;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
+            50% { transform: translateY(-20px) scale(1.2); opacity: 1; }
+        }
+
+        /* Compatibilidad y recomendaciones */
+        .recommendations {
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px solid rgba(0,255,204,0.2);
+        }
+
+        .rec-title {
+            color: #00FFCC;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .rec-text {
+            color: #ccc;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Botón de regreso */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #00FFCC, #00B388);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,255,204,0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,255,204,0.5);
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 1024px) {
+            .pc-builder {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .control-panel {
+                order: -1;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .container {
+                padding: 20px 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .pc-case {
+                height: 400px;
+            }
+            
+            .component-slot {
+                font-size: 0.8rem;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="PRINCIPAL.html" class="back-button">
+        ?? Volver al Inicio
+    </a>
+
+    <div class="header">
+        <h1>?? PC BUILDER SIMULATOR</h1>
+        <p class="subtitle">Construye tu PC perfecta virtualmente</p>
+    </div>
+
+    <div class="container">
+        <div class="pc-builder">
+            <!-- Área de construcción -->
+            <div class="build-area">
+                <div class="pc-case" id="pcCase">
+                    <div class="component-slot cpu-slot" data-type="cpu">
+                        CPU
+                    </div>
+                    <div class="component-slot gpu-slot" data-type="gpu">
+                        GPU / Tarjeta Gráfica
+                    </div>
+                    <div class="component-slot ram-slot" data-type="ram">
+                        RAM
+                    </div>
+                    <div class="component-slot storage-slot" data-type="storage">
+                        Almacenamiento
+                    </div>
+                    <div class="component-slot psu-slot" data-type="psu">
+                        Fuente de Poder
+                    </div>
+                    <div class="component-slot mobo-slot" data-type="mobo">
+                        Motherboard
+                    </div>
+                </div>
+                
+                <div class="recommendations">
+                    <div class="rec-title">?? Recomendaciones:</div>
+                    <div class="rec-text" id="recommendations">
+                        Arrastra los componentes desde el panel lateral para armar tu PC. Te ayudaré con recomendaciones de compatibilidad.
+                    </div>
+                </div>
+            </div>
+
+            <!-- Panel de control -->
+            <div class="control-panel">
+                <div class="budget-display">
+                    <div class="budget-title">?? Presupuesto Total</div>
+                    <div class="budget-amount" id="totalBudget">$0</div>
+                </div>
+
+                <!-- Procesadores -->
+                <div class="component-category">
+                    <div class="category-title">?? Procesadores</div>
+                    <div class="component-item" draggable="true" data-type="cpu" data-price="299" data-name="Intel Core i5-12400F">
+                        <div class="component-name">Intel Core i5-12400F</div>
+                        <div class="component-price">$299</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="cpu" data-price="449" data-name="AMD Ryzen 7 5800X">
+                        <div class="component-name">AMD Ryzen 7 5800X</div>
+                        <div class="component-price">$449</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="cpu" data-price="699" data-name="Intel Core i9-12900K">
+                        <div class="component-name">Intel Core i9-12900K</div>
+                        <div class="component-price">$699</div>
+                    </div>
+                </div>
+
+                <!-- Tarjetas Gráficas -->
+                <div class="component-category">
+                    <div class="category-title">?? Tarjetas Gráficas</div>
+                    <div class="component-item" draggable="true" data-type="gpu" data-price="399" data-name="RTX 4060">
+                        <div class="component-name">NVIDIA RTX 4060</div>
+                        <div class="component-price">$399</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="gpu" data-price="699" data-name="RTX 4070 Super">
+                        <div class="component-name">NVIDIA RTX 4070 Super</div>
+                        <div class="component-price">$699</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="gpu" data-price="1599" data-name="RTX 4090">
+                        <div class="component-name">NVIDIA RTX 4090</div>
+                        <div class="component-price">$1,599</div>
+                    </div>
+                </div>
+
+                <!-- RAM -->
+                <div class="component-category">
+                    <div class="category-title">? Memoria RAM</div>
+                    <div class="component-item" draggable="true" data-type="ram" data-price="79" data-name="16GB DDR4-3200">
+                        <div class="component-name">16GB DDR4-3200</div>
+                        <div class="component-price">$79</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="ram" data-price="149" data-name="32GB DDR4-3600">
+                        <div class="component-name">32GB DDR4-3600</div>
+                        <div class="component-price">$149</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="ram" data-price="199" data-name="32GB DDR5-5600">
+                        <div class="component-name">32GB DDR5-5600</div>
+                        <div class="component-price">$199</div>
+                    </div>
+                </div>
+
+                <!-- Almacenamiento -->
+                <div class="component-category">
+                    <div class="category-title">?? Almacenamiento</div>
+                    <div class="component-item" draggable="true" data-type="storage" data-price="89" data-name="1TB NVMe SSD">
+                        <div class="component-name">1TB NVMe SSD</div>
+                        <div class="component-price">$89</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="storage" data-price="179" data-name="2TB NVMe SSD">
+                        <div class="component-name">2TB NVMe SSD</div>
+                        <div class="component-price">$179</div>
+                    </div>
+                </div>
+
+                <!-- Motherboard -->
+                <div class="component-category">
+                    <div class="category-title">?? Motherboard</div>
+                    <div class="component-item" draggable="true" data-type="mobo" data-price="129" data-name="B450 Motherboard">
+                        <div class="component-name">B450 Motherboard</div>
+                        <div class="component-price">$129</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="mobo" data-price="199" data-name="X570 Motherboard">
+                        <div class="component-name">X570 Motherboard</div>
+                        <div class="component-price">$199</div>
+                    </div>
+                </div>
+
+                <!-- Fuente de Poder -->
+                <div class="component-category">
+                    <div class="category-title">? Fuente de Poder</div>
+                    <div class="component-item" draggable="true" data-type="psu" data-price="89" data-name="650W 80+ Gold">
+                        <div class="component-name">650W 80+ Gold</div>
+                        <div class="component-price">$89</div>
+                    </div>
+                    <div class="component-item" draggable="true" data-type="psu" data-price="149" data-name="850W 80+ Platinum">
+                        <div class="component-name">850W 80+ Platinum</div>
+                        <div class="component-price">$149</div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="action-btn build-btn" onclick="generateBuildReport()">
+                        ?? Generar Reporte
+                    </button>
+                    <button class="action-btn reset-btn" onclick="resetBuild()">
+                        ?? Reiniciar Build
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentBuild = {};
+        let totalCost = 0;
+
+        // Sistema de drag and drop
+        document.addEventListener('DOMContentLoaded', function() {
+            const componentItems = document.querySelectorAll('.component-item');
+            const componentSlots = document.querySelectorAll('.component-slot');
+
+            // Drag start
+            componentItems.forEach(item => {
+                item.addEventListener('dragstart', function(e) {
+                    e.dataTransfer.setData('text/plain', JSON.stringify({
+                        type: this.dataset.type,
+                        name: this.dataset.name,
+                        price: parseInt(this.dataset.price)
+                    }));
+                    this.style.opacity = '0.5';
+                });
+
+                item.addEventListener('dragend', function() {
+                    this.style.opacity = '1';
+                });
+            });
+
+            // Drop zones
+            componentSlots.forEach(slot => {
+                slot.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    if (!this.classList.contains('filled')) {
+                        this.style.background = 'rgba(0,255,204,0.3)';
+                    }
+                });
+
+                slot.addEventListener('dragleave', function() {
+                    this.style.background = 'rgba(0,255,204,0.05)';
+                });
+
+                slot.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    const componentData = JSON.parse(e.dataTransfer.getData('text/plain'));
+                    
+                    if (componentData.type === this.dataset.type && !this.classList.contains('filled')) {
+                        // Instalar componente
+                        this.textContent = componentData.name;
+                        this.classList.add('filled');
+                        this.style.background = 'rgba(0,255,204,0.2)';
+                        
+                        // Actualizar build
+                        currentBuild[componentData.type] = componentData;
+                        updateBudget();
+                        updateRecommendations();
+                        
+                        // Efecto de partículas
+                        createParticles(this);
+                    }
+                });
+
+                // Click para remover componente
+                slot.addEventListener('dblclick', function() {
+                    if (this.classList.contains('filled')) {
+                        const componentType = this.dataset.type;
+                        delete currentBuild[componentType];
+                        this.classList.remove('filled');
+                        this.textContent = this.textContent.split('\n')[0]; // Restaurar texto original
+                        this.style.background = 'rgba(0,255,204,0.05)';
+                        updateBudget();
+                        updateRecommendations();
+                    }
+                });
+            });
+        });
+
+        // Actualizar presupuesto
+        function updateBudget() {
+            totalCost = Object.values(currentBuild).reduce((sum, component) => sum + component.price, 0);
+            document.getElementById('totalBudget').textContent = `$${totalCost.toLocaleString()}`;
+        }
+
+        // Sistema de recomendaciones
+        function updateRecommendations() {
+            const recElement = document.getElementById('recommendations');
+            const componentsCount = Object.keys(currentBuild).length;
+            
+            if (componentsCount === 0) {
+                recElement.textContent = "Arrastra los componentes desde el panel lateral para armar tu PC. Te ayudaré con recomendaciones de compatibilidad.";
+                return;
+            }
+
+            let recommendations = [];
+
+            // Verificar compatibilidad CPU-GPU
+            if (currentBuild.cpu && currentBuild.gpu) {
+                if (currentBuild.cpu.name.includes('i5') && currentBuild.gpu.price > 1000) {
+                    recommendations.push("?? Tu CPU podría ser un cuello de botella para esa GPU tan potente.");
+                } else if (currentBuild.cpu.name.includes('i9') && currentBuild.gpu.price < 400) {
+                    recommendations.push("?? Podrías aprovechar mejor tu CPU con una GPU más potente.");
+                }
+            }
+
+            // Verificar RAM
+            if (currentBuild.ram) {
+                if (currentBuild.gpu && currentBuild.gpu.name.includes('4090') && !currentBuild.ram.name.includes('32GB')) {
+                    recommendations.push("?? Para RTX 4090, considera 32GB de RAM para mejor rendimiento.");
+                }
+            }
+
+            // Verificar fuente de poder
+            if (currentBuild.psu && currentBuild.gpu) {
+                if (currentBuild.gpu.name.includes('4090') && !currentBuild.psu.name.includes('850W')) {
+                    recommendations.push("? RTX 4090 requiere al menos 850W de fuente de poder.");
+                }
+            }
+
+            if (recommendations.length === 0) {
+                if (componentsCount === 6) {
+                    recommendations.push("?? ¡Excelente! Tu build está completo y balanceado.");
+                } else {
+                    recommendations.push(`? Buen progreso. Te faltan ${6 - componentsCount} componentes para completar tu PC.`);
+                }
+            }
+
+            recElement.innerHTML = recommendations.join('<br>');
+        }
+
+        // Crear efecto de partículas
+        function createParticles(element) {
+            const rect = element.getBoundingClientRect();
+            const container = document.getElementById('pcCase');
+            
+            for (let i = 0; i < 10; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = (rect.left - container.offsetLeft + Math.random() * rect.width) + 'px';
+                particle.style.top = (rect.top - container.offsetTop + Math.random() * rect.height) + 'px';
+                particle.style.animationDelay = Math.random() * 1 + 's';
+                
+                container.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 3000);
+            }
+        }
+
+        // Generar reporte de build
+        function generateBuildReport() {
+            if (Object.keys(currentBuild).length === 0) {
+                alert('?? Primero agrega algunos componentes a tu build');
+                return;
+            }
+
+            let report = "??? REPORTE DE TU PC BUILD\n";
+            report += "=" * 30 + "\n\n";
+            
+            Object.entries(currentBuild).forEach(([type, component]) => {
+                const typeNames = {
+                    cpu: '?? Procesador',
+                    gpu: '?? Tarjeta Gráfica',
+                    ram: '? Memoria RAM',
+                    storage: '?? Almacenamiento',
+                    mobo: '?? Motherboard',
+                    psu: '? Fuente de Poder'
+                };
+                report += `${typeNames[type]}: ${component.name} - $${component.price}\n`;
+            });
+            
+            report += `\n?? TOTAL: $${totalCost.toLocaleString()}\n`;
+            report += `\n?? Completado: ${Object.keys(currentBuild).length}/6 componentes`;
+            
+            // Calcular rendimiento estimado
+            let performance = "Básico";
+            if (totalCost > 2000) performance = "Enthusiast";
+            else if (totalCost > 1200) performance = "Alto";
+            else if (totalCost > 800) performance = "Medio";
+            
+            report += `\n?? Rendimiento Estimado: ${performance}`;
+
+            alert(report);
+        }
+
+        // Reiniciar build
+        function resetBuild() {
+            if (confirm('¿Estás seguro de que quieres reiniciar tu build?')) {
+                currentBuild = {};
+                totalCost = 0;
+                
+                document.querySelectorAll('.component-slot').forEach(slot => {
+                    slot.classList.remove('filled');
+                    slot.style.background = 'rgba(0,255,204,0.05)';
+                    // Restaurar texto original de cada slot
+                    const originalTexts = {
+                        cpu: 'CPU',
+                        gpu: 'GPU / Tarjeta Gráfica',
+                        ram: 'RAM',
+                        storage: 'Almacenamiento',
+                        psu: 'Fuente de Poder',
+                        mobo: 'Motherboard'
+                    };
+                    slot.textContent = originalTexts[slot.dataset.type];
+                });
+                
+                updateBudget();
+                updateRecommendations();
+                
+                // Efecto visual de reset
+                document.getElementById('pcCase').style.animation = 'none';
+                setTimeout(() => {
+                    document.getElementById('pcCase').style.animation = '';
+                }, 100);
+            }
+        }
+
+        // Efectos visuales adicionales
+        setInterval(() => {
+            const particles = document.querySelectorAll('.particle');
+            if (particles.length < 5 && Math.random() > 0.8) {
+                const container = document.getElementById('pcCase');
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * container.offsetWidth + 'px';
+                particle.style.top = Math.random() * container.offsetHeight + 'px';
+                container.appendChild(particle);
+                
+                setTimeout(() => particle.remove(), 3000);
+            }
+        }, 2000);
+    </script>
+</body>
+</html>

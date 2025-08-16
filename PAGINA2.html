@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>BIENVENIDOS A EXPLORAR EL MUNDO DE LA TECNOLOGÍA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #52ac75 0%, #3e8e5f 50%, #2a6e47 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Patrón de fondo animado */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255,255,255,0.05) 2px, transparent 2px),
+                radial-gradient(circle at 80% 20%, rgba(255,255,255,0.08) 1px, transparent 1px),
+                radial-gradient(circle at 40% 40%, rgba(255,255,255,0.03) 3px, transparent 3px);
+            background-size: 100px 100px, 50px 50px, 150px 150px;
+            animation: float 20s ease-in-out infinite;
+            z-index: -1;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        
+        /* Header moderno */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            position: relative;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+            border-radius: 2px;
+        }
+        
+        header img {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 4px solid rgba(255,255,255,0.3);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+        
+        header img:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+        
+        h1 {
+            color: #ffffff;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.4);
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 2px;
+            background: linear-gradient(45deg, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        h2 {
+            color: #ffffff;
+            font-size: 2rem;
+            margin: 30px 0 20px 0;
+            text-align: center;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #00ff88, #00cc66);
+            border-radius: 2px;
+        }
+        
+        h3 {
+            color: #004d40;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        /* Container principal */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Formulario moderno */
+        .form-section {
+            background: rgba(255,255,255,0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+        }
+        
+        form {
+            display: grid;
+            gap: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        label {
+            font-weight: 600;
+            color: #004d40;
+            font-size: 1rem;
+        }
+        
+        input[type="text"] {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: rgba(255,255,255,0.9);
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #52ac75;
+            box-shadow: 0 0 0 3px rgba(82,172,117,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .radio-group {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            background: rgba(82,172,117,0.1);
+        }
+        
+        .radio-item:hover {
+            background: rgba(82,172,117,0.2);
+            transform: translateY(-2px);
+        }
+        
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        input[type="submit"], input[type="reset"] {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        input[type="submit"] {
+            background: linear-gradient(45deg, #52ac75, #3e8e5f);
+            color: white;
+            box-shadow: 0 5px 15px rgba(82,172,117,0.3);
+        }
+        
+        input[type="submit"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(82,172,117,0.4);
+        }
+        
+        input[type="reset"] {
+            background: linear-gradient(45deg, #757575, #616161);
+            color: white;
+            box-shadow: 0 5px 15px rgba(117,117,117,0.3);
+        }
+        
+        input[type="reset"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(117,117,117,0.4);
+        }
+        
+        /* Enlaces estilizados */
+        .link-card {
+            background: rgba(255,255,255,0.9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .link-card a {
+            color: #52ac75;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .link-card a:hover {
+            background: rgba(82,172,117,0.1);
+            transform: scale(1.05);
+        }
+        
+        /* Sección multimedia */
+        .multimedia-section {
+            display: grid;
+            gap: 40px;
+            margin: 40px 0;
+        }
+        
+        article {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        article:hover {
+            transform: translateY(-5px);
+        }
+        
+        figure {
+            text-align: center;
+            margin: 0;
+        }
+        
+        video {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 0;
+        }
+        
+        audio {
+            width: 100%;
+            max-width: 500px;
+            margin: 20px 0;
+        }
+        
+        figcaption {
+            font-style: italic;
+            color: #666;
+            margin-top: 15px;
+            font-size: 1rem;
+        }
+        
+        /* Footer moderno */
+        footer {
+            background: rgba(0,0,0,0.8);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            backdrop-filter: blur(10px);
+        }
+        
+        footer a {
+            color: #52ac75;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+        
+        footer a:hover {
+            color: #00ff88;
+        }
+        
+        /* Botón de navegación */
+        .nav-button {
+            text-align: center;
+            margin: 40px 0;
+        }
+        
+        .nav-button a {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #004d40, #00695c);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,77,64,0.3);
+        }
+        
+        .nav-button a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,77,64,0.4);
+            background: linear-gradient(45deg, #00695c, #004d40);
+        }
+        
+        /* Animaciones adicionales */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .form-section, article, .link-card {
+            animation: slideInUp 0.8s ease-out;
+        }
+        
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .radio-group {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .button-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            input[type="submit"], input[type="reset"] {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            header {
+                padding: 30px 15px;
+            }
+            
+            .main-container {
+                padding: 0 15px;
+            }
+            
+            .form-section, article {
+                padding: 25px 20px;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+                letter-spacing: 1px;
+            }
+            
+            header img {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .form-section {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="imagenes/mi_gift.gif" width="145" height="145" alt="logo" />
+        <h1>BIENVENIDOS A LA ERA DIGITAL</h1>
+    </header>
+    
+    <div class="main-container">
+        <section class="form-section">
+            <h2>Registrate</h2>
+            <form action="https://www.iestpluisnegreiros.edu.pe/" method="get">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="dni">DNI:</label>
+                        <input type="text" name="dni" id="dni" placeholder="Ingresa tu DNI">
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" name="nombre" id="nombre" placeholder="Ingresa tu nombre">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" name="apellido" id="apellido" placeholder="Ingresa tu apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="text" name="email" id="email" placeholder="ejemplo@correo.com">
+                    </div>
+                </div>
+                
+                <div class="radio-group">
+                    <div class="radio-item">
+                        <input type="radio" name="sexo" id="varon" value="Varón">
+                        <label for="varon">Varón</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" name="sexo" id="mujer" value="Mujer">
+                        <label for="mujer">Mujer</label>
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <input type="submit" value="INICIAR SESIÓN">
+                    <input type="reset" value="LIMPIAR">
+                </div>
+            </form>
+        </section>
+        
+        <div class="link-card">
+            <p><a href="https://www.iestpluisnegreiros.edu.pe/ci.html" target="_blank">Este enlace</a> REDIRIGE A LA PÁGINA DE COMPUTACIÓN E INFORMÁTICA DEL IESTP LUIS NEGREIROS VEGA.</p>
+        </div>
+        
+        <!-- Contenido Multimedia -->
+        <h2>Contenido Multimedia</h2>
+        
+        <div class="multimedia-section">
+            <article>
+                <figure>
+                    <h3>Informática | HARDWARE y SOFTWARE😎📱 ¿Qué es el Hardware?🔍¿Qué es el Software?</h3>
+                    <video src="videos/mi_video.mp4" controls poster="imagenes/mi_imagen.jpg">
+                        <source src="videos/mi_video.mp4" type="video/mp4">
+                        Su Navegador NO SOPORTA la etiqueta VIDEO.
+                    </video>
+                    <figcaption>Mi video personalizado</figcaption>
+                </figure>
+            </article>
+            
+            <article>
+                <figure>
+                    <h3>MÚSICA DE INFORMÁTICA</h3>
+                    <audio src="sonidos/mi_audio.mp3" controls>
+                        Tu navegador no soporta audio.
+                    </audio>
+                    <figcaption>Mi audio favorito</figcaption>
+                </figure>
+            </article>
+        </div>
+        
+        <div class="nav-button">
+            <a href="PRINCIPAL.html">Volver a la página anterior</a>
+        </div>
+    </div>
+    
+    <footer>
+        Este ejemplo de código ha sido creado para <a href="https://www.iestpluisnegreiros.edu.pe">www.iestpluisnegreiros.edu.pe</a>
+    </footer>
+</body>
+</html>
